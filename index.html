@@ -10,7 +10,8 @@
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
 for (var i = 0; i < 200000; i++) {
-	run();	
+	run();
+	setTimeout(run, 1000);
 }
 function run() {
 	var randArr = new Uint8Array(32)
