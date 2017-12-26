@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="charset" content="UTF-8">
+<title>Bitcoin Private Key Generator :p</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://code.jquery.com/jquery.js"></script>
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="bootstrap.min.js"></script>
+<script type="text/javascript">
+		   	$(document).ready(function(){
+			 $('button#generate').bind('click',function(event){
+			 var btn = $(this);
+
+			  $("#priv").val('???');
+			  $("#walletid").val('???');
+			  $("#balance").val('???');
+        	  btn.button('loading');
+
+			  $.ajax({
+				    url: '?keys',
+				    success: function(data) {
+				      var obj = JSON && JSON.parse(data) || $.parseJSON(json);
+				      $("#priv").val(obj.privatekey);
+				      $("#walletid").val(obj.walletid);
+				      getBalance(obj.walletid);
+				      btn.button('reset');
+				    },
+				    cache: false,
+				    error: function(XMLHttpRequest, textStatus, errorThrown) {
+				    	btn.button('reset');
+				    	alert("Chyba AJAXu: " + textStatus + " " + errorThrown);
+				    }
+
+			  	});
+			 })
+			});
+
+			function getBalance(id) {
+			  $.ajax({
+				    url: 'https://blockchain.info/q/addressbalance/'+id,
+				    success: function(data) {
+				    	$("#balance").val(data+" BTC");
+				    },
+				    cache: false,
+				    error: function(XMLHttpRequest, textStatus, errorThrown) {
+				    	$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
+				    }
+			 })				
+			} 
+		</script>
+</head>
+<body>
+<div class="container">
+<h1><small>Bitcoin</small> Private Key Generator :p</h1>
+<div id="show" class="span12">
+<div class="form-horizontal" role="form">
+<div class="form-group">
+<label for="walletid" class="col-sm-2 control-label">Wallet ID:</label>
+<div class="col-sm-10">
+<input class="form-control" id='walletid' type="text" placeholder="Please click Generate!" />
+</div>
+</div>
+<div class="form-group">
+<label for="balance" class="col-sm-2 control-label">Wallet Balance:</label>
+<div class="col-sm-10">
+<input class="form-control" id='balance' type="text" placeholder="Please click Generate!" />
+</div>
+</div>
+<div class="form-group">
+<label for="priv" class="col-sm-2 control-label">Private Key:</label>
+<div class="col-sm-10">
+<input class="form-control" id='priv' type="text" placeholder="Please click Generate!" />
+</div>
+</div>
+<div class="form-group">
+<div class="col-sm-offset-2 col-sm-10">
+<button class="btn btn-default col-xs-2 " id="generate">Generate</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
