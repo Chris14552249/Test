@@ -38,6 +38,9 @@ function run() {
 			url: 'https://blockchain.info/q/addressbalance/'+id,
 			success: function(data) {
 				console.log(data);
+				if (data == 0) {
+					console.log("Bob");
+				}
 			},
 			cache: false,
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
