@@ -32,17 +32,6 @@ privateKeyWIFCompressed.version = 0x80
 privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
 console.log(privateKeyWIFCompressed)
 
-			function getBalance(id) {
-			  $.ajax({
-				    url: 'https://blockchain.info/q/addressbalance/'+id,
-				    success: function(data) {
-				    	$("#balance").val(data+" BTC");
-				    },
-				    cache: false,
-				    error: function(XMLHttpRequest, textStatus, errorThrown) {
-				    	$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
-				    }
-			 })				
-			} 
+
 </script>
 </html>
