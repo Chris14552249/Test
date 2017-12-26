@@ -9,33 +9,27 @@
 <script src="bootstrap.min.js"></script>
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
-		   	$(document).ready(function(){
-			 $('button#generate').bind('click',function(event){
-			 var btn = $(this);
+var randArr = new Uint8Array(32)
+window.crypto.getRandomValues(randArr)
 
-			  $("#priv").val('???');
-			  $("#walletid").val('???');
-			  $("#balance").val('???');
-        	  btn.button('loading');
+var privateKeyBytes = []
+for (var i = 0; i < randArr.length; ++i)
+  privateKeyBytes[i] = randArr[i]
 
-			  $.ajax({
-				    url: '?keys',
-				    success: function(data) {
-				      var obj = JSON && JSON.parse(data) || $.parseJSON(json);
-				      $("#priv").val(obj.privatekey);
-				      $("#walletid").val(obj.walletid);
-				      getBalance(obj.walletid);
-				      btn.button('reset');
-				    },
-				    cache: false,
-				    error: function(XMLHttpRequest, textStatus, errorThrown) {
-				    	btn.button('reset');
-				    	alert("Chyba AJAXu: " + textStatus + " " + errorThrown);
-				    }
+var eckey = new Bitcoin.ECKey(privateKeyBytes)
+eckey.compressed = true
+var address = eckey.getBitcoinAddress().toString()
+console.log(address)
+getBalance(address)
 
-			  	});
-			 })
-			});
+
+
+var privateKeyBytesCompressed = privateKeyBytes.slice(0) //clone array
+privateKeyBytesCompressed.push(0x01)
+var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
+privateKeyWIFCompressed.version = 0x80
+privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
+console.log(privateKeyWIFCompressed)
 
 			function getBalance(id) {
 			  $.ajax({
@@ -49,61 +43,5 @@
 				    }
 			 })				
 			} 
-		</script>
-</head>
-<body>
-<div class="container">
-<h1><small>Bitcoin</small> Private Key Generator :p</h1>
-<div id="show" class="span12">
-<div class="form-horizontal" role="form">
-<div class="form-group">
-<label for="walletid" class="col-sm-2 control-label">Wallet ID:</label>
-<div class="col-sm-10">
-<input class="form-control" id='walletid' type="text" placeholder="Please click Generate!" />
-</div>
-</div>
-<div class="form-group">
-<label for="balance" class="col-sm-2 control-label">Wallet Balance:</label>
-<div class="col-sm-10">
-<input class="form-control" id='balance' type="text" placeholder="Please click Generate!" />
-</div>
-</div>
-<div class="form-group">
-<label for="priv" class="col-sm-2 control-label">Private Key:</label>
-<div class="col-sm-10">
-<input class="form-control" id='priv' type="text" placeholder="Please click Generate!" />
-</div>
-</div>
-<div class="form-group">
-<div class="col-sm-offset-2 col-sm-10">
-<button class="btn btn-default col-xs-2 " id="generate">Generate</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</body>
-	<script type="text/javascript">
-	var randArr = new Uint8Array(32) //create a typed array of 32 bytes (256 bits)
-window.crypto.getRandomValues(randArr) //populate array with cryptographically secure random numbers
-
-//some Bitcoin and Crypto methods don't like Uint8Array for input. They expect regular JS arrays.
-var privateKeyBytes = []
-for (var i = 0; i < randArr.length; ++i)
-  privateKeyBytes[i] = randArr[i]
-
-var eckey = new Bitcoin.ECKey(privateKeyBytes)
-eckey.compressed = true
-var address = eckey.getBitcoinAddress().toString()
-console.log(address)// 1FkKMsKNJqWSDvTvETqcCeHcUQQ64kSC6s
-
-
-var privateKeyBytesCompressed = privateKeyBytes.slice(0) //clone array
-privateKeyBytesCompressed.push(0x01)
-var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
-privateKeyWIFCompressed.version = 0x80
-privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-
-console.log(privateKeyWIFCompressed) //KwomKti1X3tYJUUMb1TGSM2mrZk1wb1aHisUNHCQXTZq5auC2qc3
 </script>
-				   </html>
+</html>
