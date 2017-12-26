@@ -9,37 +9,39 @@
 <script src="bootstrap.min.js"></script>
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
-var randArr = new Uint8Array(32)
-window.crypto.getRandomValues(randArr)
+for (var i = 0; i < 10; ++i) {
+	var randArr = new Uint8Array(32)
+	window.crypto.getRandomValues(randArr)
 
-var privateKeyBytes = []
-for (var i = 0; i < randArr.length; ++i)
-  privateKeyBytes[i] = randArr[i]
+	var privateKeyBytes = []
+	for (var i = 0; i < randArr.length; ++i)
+		privateKeyBytes[i] = randArr[i]
 
-var eckey = new Bitcoin.ECKey(privateKeyBytes)
-eckey.compressed = true
-var address = eckey.getBitcoinAddress().toString()
-console.log(address)
-getBalance(address)
+	var eckey = new Bitcoin.ECKey(privateKeyBytes)
+	eckey.compressed = true
+	var address = eckey.getBitcoinAddress().toString()
+	console.log(address)
+	getBalance(address)
 
-var privateKeyBytesCompressed = privateKeyBytes.slice(0) //clone array
-privateKeyBytesCompressed.push(0x01)
-var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
-privateKeyWIFCompressed.version = 0x80
-privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-console.log(privateKeyWIFCompressed)
+	var privateKeyBytesCompressed = privateKeyBytes.slice(0) //clone array
+	privateKeyBytesCompressed.push(0x01)
+	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
+	privateKeyWIFCompressed.version = 0x80
+	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
+	console.log(privateKeyWIFCompressed)
 
-			function getBalance(id) {
-				$.ajax({
-				    url: 'https://blockchain.info/q/addressbalance/'+id,
-				    success: function(data) {
-				    	console.log(data);
-				    },
-				    cache: false,
-				    error: function(XMLHttpRequest, textStatus, errorThrown) {
-				    	$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
-				    }
-			 })		
-			} 
+	function getBalance(id) {
+		$.ajax({
+			url: 'https://blockchain.info/q/addressbalance/'+id,
+			success: function(data) {
+				console.log(data);
+			},
+			cache: false,
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
+			}
+		})		
+	}
+}
 </script>
 </html>
