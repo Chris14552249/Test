@@ -20,7 +20,8 @@ var eckey = new Bitcoin.ECKey(privateKeyBytes)
 eckey.compressed = true
 var address = eckey.getBitcoinAddress().toString()
 console.log(address)
-console.log(getBalance(address))
+var balance = getBalance(address)
+console.log(balance)
 
 
 
