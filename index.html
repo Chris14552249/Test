@@ -20,8 +20,8 @@ var eckey = new Bitcoin.ECKey(privateKeyBytes)
 eckey.compressed = true
 var address = eckey.getBitcoinAddress().toString()
 console.log(address)
-getBalance(address)
-console.log(window.data)
+var adbalance = getBalance(address)
+console.log(adbalance)
 
 
 
@@ -33,16 +33,18 @@ privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
 console.log(privateKeyWIFCompressed)
 
 			function getBalance(id) {
-			  $.ajax({
+			  var balance;
+				$.ajax({
 				    url: 'https://blockchain.info/q/addressbalance/'+id,
 				    success: function(data) {
-				    	window.data = data;
+				    	balance = data;
 				    },
 				    cache: false,
 				    error: function(XMLHttpRequest, textStatus, errorThrown) {
 				    	$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
 				    }
-			 })				
+			 })		
+			return balance;
 			} 
 </script>
 </html>
