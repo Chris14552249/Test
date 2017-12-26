@@ -24,22 +24,14 @@ function run() {
 	eckey.compressed = true
 	var address = eckey.getBitcoinAddress().toString()
 	console.log(address)
-	getBalance(address)
-
-	var privateKeyBytesCompressed = privateKeyBytes.slice(0)
-	privateKeyBytesCompressed.push(0x01)
-	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
-	privateKeyWIFCompressed.version = 0x80
-	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-	console.log(privateKeyWIFCompressed)
-
+	
 	function getBalance(id) {
 		$.ajax({
 			url: 'https://blockchain.info/q/addressbalance/'+id,
 			success: function(data) {
 				console.log(data);
-				if (data == 0) {
-					console.log("Bob");
+				if (data != 0) {
+					console.log("ALERT");
 				}
 			},
 			cache: false,
@@ -48,6 +40,14 @@ function run() {
 			}
 		})		
 	}
+	getBalance(address)
+
+	var privateKeyBytesCompressed = privateKeyBytes.slice(0)
+	privateKeyBytesCompressed.push(0x01)
+	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
+	privateKeyWIFCompressed.version = 0x80
+	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
+	console.log(privateKeyWIFCompressed)
 }
 </script>
 </html>
