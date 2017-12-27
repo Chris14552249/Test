@@ -13,8 +13,7 @@ var data = [
    ['Test', 'Test'],
 ];
 var count = 0;
-var myvar;
-start_csv()
+var myVar = setInterval(run, 1);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -40,11 +39,8 @@ function run() {
    			['Test', 'Test'],
 		];
 		count = 0;
-		start_csv()
+		var myVar = setInterval(run, 1);
 	}
-}
-function start_csv() {
-	myVar = setInterval(run, 1);
 }
 function download_csv() {
 	clearInterval(myVar);
