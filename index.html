@@ -9,7 +9,7 @@
 <script src="bootstrap.min.js"></script>
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
-var myVar = setInterval(run, 1000);
+var myVar = setInterval(run, 1);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -23,23 +23,6 @@ function run() {
 	var address = eckey.getBitcoinAddress().toString()
 	console.log(address)
 	
-	function getBalance(id) {
-		$.ajax({
-			url: 'https://blockchain.info/q/addressbalance/'+id,
-			success: function(data) {
-				console.log(data);
-				if (data != 0) {
-					console.log("ALERT");
-					clearInterval(myVar);
-				}
-			},
-			cache: false,
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
-			}
-		})		
-	}
-	getBalance(address)
 	var privateKeyBytesCompressed = privateKeyBytes.slice(0)
 	privateKeyBytesCompressed.push(0x01)
 	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
