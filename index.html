@@ -35,6 +35,7 @@ function run() {
 	console.log(count);
 }
 function download_csv() {
+	clearInterval(myVar);
 	var csv = 'Address, Key\n';
     	data.forEach(function(row) {
             	csv += row.join(',');
@@ -47,7 +48,7 @@ function download_csv() {
     	hiddenElement.target = '_blank';
     	hiddenElement.download = 'addresses.csv';
     	hiddenElement.click();
-}
+}	
 </script>
 <button onclick="download_csv()">Download CSV</button> 
 </html>
