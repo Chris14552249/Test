@@ -13,6 +13,7 @@ var data = [
    ['Test', 'Test'],
 ];
 var count = 0;
+var myvar;
 start_csv()
 function run() {
 	var randArr = new Uint8Array(32)
@@ -43,7 +44,7 @@ function run() {
 	}
 }
 function start_csv() {
-	var myVar = setInterval(run, 1);
+	myVar = setInterval(run, 1);
 }
 function download_csv() {
 	clearInterval(myVar);
