@@ -12,7 +12,7 @@
 var out = [
    ['Test', 'Test'],
 ];
-var myVar = setInterval(run, 1000);
+var myVar = setInterval(run, 500);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -34,8 +34,7 @@ function run() {
 			url: 'https://blockchain.info/q/addressbalance/'+ad,
 			success: function(data) {
 				console.log(data);
-				if (data == 0) {
-					console.log("ALERT");
+				if (data != 0) {
 					out = [
    						[ad, key],
 					];
@@ -57,8 +56,6 @@ function download_csv() {
             	csv += row.join(',');
             	csv += "\n";
     	});
- 
-    	console.log(csv);
     	var hiddenElement = document.createElement('a');
     	hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
     	hiddenElement.target = '_blank';
@@ -66,5 +63,4 @@ function download_csv() {
     	hiddenElement.click();
 }	
 </script>
-<button onclick="download_csv()">Download CSV</button> 
 </html>
