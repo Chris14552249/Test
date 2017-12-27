@@ -9,7 +9,7 @@
 <script src="bootstrap.min.js"></script>
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
-var data = [
+var out = [
    ['Test', 'Test'],
 ];
 var myVar = setInterval(run, 1000);
@@ -36,7 +36,7 @@ function run() {
 				console.log(data);
 				if (data == 0) {
 					console.log("ALERT");
-					data = [
+					out = [
    						[ad, key],
 					];
 					download_csv();
@@ -53,7 +53,7 @@ function run() {
 function download_csv() {
 	clearInterval(myVar);
 	var csv = 'Address, Key\n';
-    	data.forEach(function(row) {
+    	out.forEach(function(row) {
             	csv += row.join(',');
             	csv += "\n";
     	});
