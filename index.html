@@ -12,11 +12,11 @@
 var data = [
    ['Test', 'Test'],
 ];
+var count = 0;
 var myVar = setInterval(run, 1);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
-
 	var privateKeyBytes = []
 	for (var i = 0; i < randArr.length; ++i) {
 		privateKeyBytes[i] = randArr[i]
@@ -24,18 +24,16 @@ function run() {
 	var eckey = new Bitcoin.ECKey(privateKeyBytes)
 	eckey.compressed = true
 	var address = eckey.getBitcoinAddress().toString()
-	console.log(address)
-	
 	var privateKeyBytesCompressed = privateKeyBytes.slice(0)
 	privateKeyBytesCompressed.push(0x01)
 	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
 	privateKeyWIFCompressed.version = 0x80
 	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-	console.log(privateKeyWIFCompressed)
 	var newdata = [[address, privateKeyWIFCompressed]];
 	data.push(newdata);
+	count += 1;
+	console.log(count);
 }
-	
 function download_csv() {
 	var csv = 'Address, Key\n';
     	data.forEach(function(row) {
@@ -51,6 +49,5 @@ function download_csv() {
     	hiddenElement.click();
 }
 </script>
- 
 <button onclick="download_csv()">Download CSV</button> 
 </html>
