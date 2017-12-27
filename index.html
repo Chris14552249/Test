@@ -12,8 +12,7 @@
 var out = [
    ['Test', 'Test'],
 ];
-var count = 0;
-var myVar = setInterval(run, 1);
+var myVar = setInterval(run, 250);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -48,10 +47,6 @@ function run() {
 				getBalance(ad,key);
 			}
 		})		
-	}
-	count += 1;
-	if (count == 10) {
-		clearInterval(myVar);
 	}
 }
 
