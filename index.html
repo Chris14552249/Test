@@ -9,6 +9,9 @@
 <script src="bootstrap.min.js"></script>
 <script src="bitcoinjs-min.js"></script>
 <script type="text/javascript">
+var data = [
+   ['Test', 'Test'],
+];
 var myVar = setInterval(run, 1000);
 function run() {
 	var randArr = new Uint8Array(32)
@@ -46,29 +49,23 @@ function run() {
 	privateKeyWIFCompressed.version = 0x80
 	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
 	console.log(privateKeyWIFCompressed)
+	var newdata = [[address, privateKeyWIFCompressed]];
+	data.push(newdata);
 }
-var data = [
-   ['Foo', 'programmer'],
-   ['Bar', 'bus driver'],
-   ['Moo', 'Reindeer Hunter']
-];
-	var address = 123;
-var newdata = [[address,'Vaklley']];
-data.push(newdata);
- 
+	
 function download_csv() {
-    var csv = 'Name,Title\n';
-    data.forEach(function(row) {
-            csv += row.join(',');
-            csv += "\n";
-    });
+	var csv = 'Name,Title\n';
+    	data.forEach(function(row) {
+            	csv += row.join(',');
+            	csv += "\n";
+    	});
  
-    console.log(csv);
-    var hiddenElement = document.createElement('a');
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';
-    hiddenElement.download = 'people.csv';
-    hiddenElement.click();
+    	console.log(csv);
+    	var hiddenElement = document.createElement('a');
+    	hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    	hiddenElement.target = '_blank';
+    	hiddenElement.download = 'people.csv';
+    	hiddenElement.click();
 }
 </script>
  
