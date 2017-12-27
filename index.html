@@ -12,9 +12,7 @@
 var data = [
    ['Test', 'Test'],
 ];
-var count = 0;
-var downcount = 0;
-var myVar = setInterval(run, 1);
+var myVar = setInterval(run, 200);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -30,23 +28,29 @@ function run() {
 	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
 	privateKeyWIFCompressed.version = 0x80
 	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-	var newdata = [[address, privateKeyWIFCompressed]];
-	data.push(newdata);
-	count += 1;
-	console.log(count);
-	if (count == 10000) {
-		download_csv();
-		data = [
-   			['Test', 'Test'],
-		];
-		count = 0;
-		var myVar = setInterval(run, 1);
-		downcount += 1;
-	}
-	if (downcount == 10) {
-		clearIneterval(myvar);
+	getBalance(address)
+	function getBalance(id) {
+ 		$.ajax({
+			url: 'https://blockchain.info/q/addressbalance/'+id,
+			success: function(data) {
+				console.log(data);
+				if (data == 0) {
+					console.log("ALERT");
+					data = [
+   						[address, privateKeyWIFCompressed],
+					];
+					download_csv();
+					clearInterval(myVar);
+				}
+			},
+			cache: false,
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				$("#balance").val("ERROR: "+ textStatus + " " + errorThrown);
+			}
+		})		
 	}
 }
+
 function download_csv() {
 	clearInterval(myVar);
 	var csv = 'Address, Key\n';
