@@ -12,7 +12,7 @@
 var out = [
    ['Test', 'Test'],
 ];
-var myVar = setInterval(run, 250);
+var myVar = setInterval(run, 1);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -28,13 +28,13 @@ function run() {
 	var privateKeyWIFCompressed = new Bitcoin.Address(privateKeyBytesCompressed)
 	privateKeyWIFCompressed.version = 0x80
 	privateKeyWIFCompressed = privateKeyWIFCompressed.toString()
-	console.log(address);
-	console.log(privateKeyWIFCompressed);
 	getBalance(address,privateKeyWIFCompressed)
 	function getBalance(ad,key) {
  		$.ajax({
 			url: 'https://blockchain.info/q/addressbalance/'+ad,
 			success: function(data) {
+				console.log(ad);
+				console.log(key);
 				console.log(data);
 				if (data != 0) {
 					out = [
@@ -65,6 +65,15 @@ function download_csv() {
     	hiddenElement.target = '_blank';
     	hiddenElement.download = 'addresses.csv';
     	hiddenElement.click();
-}	
+}
+function stop() {
+	clearInterval(myVar);	
+}
+function start() {
+	myVar = setInterval(run, 1);
+}
 </script>
+<button onclick="stop()">Stop</button>
+<button onclick="start()">Start</button>
+
 </html>
