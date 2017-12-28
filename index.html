@@ -12,7 +12,7 @@
 var out = [
    ['Test', 'Test'],
 ];
-var myVar = setInterval(run, 200);
+var myVar = setInterval(run, 250);
 function run() {
 	var randArr = new Uint8Array(32)
 	window.crypto.getRandomValues(randArr)
@@ -70,7 +70,7 @@ function stop() {
 	clearInterval(myVar);	
 }
 function start() {
-	myVar = setInterval(run, 200);
+	myVar = setInterval(run, 250);
 }
 </script>
 <button onclick="stop()">Stop</button>
